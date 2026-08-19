@@ -21,10 +21,11 @@ interface BoardProps {
   currentUser: User;
   onUpdateTask: (id: string, updates: Partial<Task>) => void;
   onDeleteTask: (id: string) => void;
+  onDecomposeTask?: (task: Task) => Promise<void>;
   hiddenStatuses?: Status[];
 }
 
-export function Board({ tasks, currentUser, onUpdateTask, onDeleteTask, hiddenStatuses = [] }: BoardProps) {
+export function Board({ tasks, currentUser, onUpdateTask, onDeleteTask, onDecomposeTask, hiddenStatuses = [] }: BoardProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [activeTab, setActiveTab] = useState<Status>('TRIAGE');
@@ -140,6 +141,7 @@ export function Board({ tasks, currentUser, onUpdateTask, onDeleteTask, hiddenSt
             onClose={() => setEditingTask(null)}
             onUpdate={onUpdateTask}
             onDelete={onDeleteTask}
+            onDecompose={onDecomposeTask}
           />
         )}
       </div>
@@ -178,6 +180,7 @@ export function Board({ tasks, currentUser, onUpdateTask, onDeleteTask, hiddenSt
           onClose={() => setEditingTask(null)}
           onUpdate={onUpdateTask}
           onDelete={onDeleteTask}
+          onDecompose={onDecomposeTask}
         />
       )}
       {pendingBlocker && (

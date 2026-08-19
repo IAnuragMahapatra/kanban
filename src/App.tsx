@@ -10,7 +10,7 @@ import { type Status } from './types';
 
 function App() {
   const { currentUser, login } = useAuth();
-  const { tasks, loading, addTask, updateTask, deleteTask } = useTasks();
+  const { tasks, loading, addTask, updateTask, deleteTask, decomposeTask } = useTasks();
   
   const [search, setSearch] = useState('');
   const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
@@ -89,6 +89,7 @@ function App() {
           currentUser={currentUser} 
           onUpdateTask={updateTask}
           onDeleteTask={deleteTask}
+          onDecomposeTask={decomposeTask}
           hiddenStatuses={hiddenStatuses}
         />
       </AppShell>

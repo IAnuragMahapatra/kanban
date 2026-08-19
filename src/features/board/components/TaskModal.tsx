@@ -8,13 +8,15 @@ interface TaskModalProps {
   onClose: () => void;
   onUpdate: (id: string, updates: Partial<Task>) => void;
   onDelete: (id: string) => void;
+  onDecompose?: (task: Task) => Promise<void>;
 }
 
-export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete }: TaskModalProps) {
+export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete, onDecompose }: TaskModalProps) {
   const [description, setDescription] = useState(task.description);
   const [deadline, setDeadline] = useState(task.deadline ? task.deadline.split('T')[0] : '');
   const [newComment, setNewComment] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDecomposing, setIsDecomposing] = useState(false);
   
   const { comments, addComment } = useComments(task.id);
 
@@ -39,6 +41,20 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete }: Ta
       onClose();
     } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       handleSave();
+    }
+  };
+
+  const handleDecompose = async () => {
+    if (!onDecompose) return;
+    setIsDecomposing(true);
+    try {
+      await onDecompose(task);
+      onClose();
+    } catch (error) {
+      console.error("Failed to decompose:", error);
+      alert("Failed to decompose task. Check console for details.");
+    } finally {
+      setIsDecomposing(false);
     }
   };
 
@@ -147,13 +163,30 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete }: Ta
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-border-subtle bg-bg-column flex justify-end gap-3">
-          <button onClick={onClose} className="px-4 py-1.5 text-sm text-text-muted hover:text-text-primary transition-colors">
-            Cancel
-          </button>
-          <button onClick={handleSave} className="px-4 py-1.5 bg-bronze text-carbon text-sm font-bold rounded hover:opacity-90 transition-opacity">
-            Save Changes
-          </button>
+        <div className="p-4 border-t border-border-subtle bg-bg-column flex justify-between items-center gap-3">
+          <div>
+            {task.status === 'TRIAGE' && onDecompose && (
+              <button 
+                onClick={handleDecompose} 
+                disabled={isDecomposing}
+                className="px-4 py-1.5 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/30 text-purple-400 text-sm font-bold rounded hover:from-purple-500/20 hover:to-blue-500/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+              >
+                {isDecomposing ? (
+                  <span className="animate-pulse">✨ Decomposing...</span>
+                ) : (
+                  <span>✨ Decompose with AI</span>
+                )}
+              </button>
+            )}
+          </div>
+          <div className="flex justify-end gap-3">
+            <button onClick={onClose} className="px-4 py-1.5 text-sm text-text-muted hover:text-text-primary transition-colors">
+              Cancel
+            </button>
+            <button onClick={handleSave} className="px-4 py-1.5 bg-bronze text-carbon text-sm font-bold rounded hover:opacity-90 transition-opacity">
+              Save Changes
+            </button>
+          </div>
         </div>
       </div>
 

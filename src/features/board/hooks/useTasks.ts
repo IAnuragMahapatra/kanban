@@ -122,5 +122,37 @@ export function useTasks() {
     }
   };
 
-  return { tasks, loading, addTask, updateTask, deleteTask };
+  const decomposeTask = async (task: Task) => {
+    try {
+      const response = await fetch('/api/decompose', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: task.title, description: task.description })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+
+      const subtasks = await response.json();
+      
+      if (Array.isArray(subtasks) && subtasks.length > 0) {
+        // Create new tasks
+        await Promise.all(subtasks.map((st: any) => 
+          addTask(st.title, { description: st.description, status: 'TODO' })
+        ));
+        
+        // Archive original task
+        await updateTask(task.id, { status: 'ARCHIVED' });
+      } else {
+        throw new Error("AI did not return valid subtasks.");
+      }
+    } catch (error) {
+      console.error("Decomposition failed:", error);
+      throw error;
+    }
+  };
+
+  return { tasks, loading, addTask, updateTask, deleteTask, decomposeTask };
 }
