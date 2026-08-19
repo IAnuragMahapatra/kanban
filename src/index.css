@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-carbon: oklch(0.20 0 0);
+  --color-bone: oklch(0.96 0.01 90);
+  --color-olive: oklch(0.38 0.03 140);
+  --color-bronze: oklch(0.56 0.08 70);
+
+  --color-bg-app: var(--color-bone);
+  --color-bg-column: oklch(0.93 0.01 90);
+  --color-bg-card: oklch(0.98 0.01 90);
+  --color-bg-card-hover: oklch(0.95 0.01 90);
+  --color-border-subtle: oklch(0.85 0.02 90);
+  
+  --color-text-primary: var(--color-carbon);
+  --color-text-muted: oklch(0.45 0.02 90);
+  --color-text-dimmed: oklch(0.60 0.02 90);
+  
+  --color-status-neutral: oklch(0.60 0.02 90);
+  --color-status-active: var(--color-bronze);
+  --color-status-blocked: oklch(0.55 0.20 20);
+  --color-status-done: var(--color-olive);
+
+  --font-display: "Canela", serif;
+  --font-body: "Neue Haas Grotesk", "Inter", sans-serif;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('/fonts/Canela.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/NeueHaasGrotesk.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-app text-text-primary font-body antialiased select-none;
+  }
+  
+  input, textarea {
+    @apply select-text;
+  }
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-column);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-olive);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-bronze);
+}
