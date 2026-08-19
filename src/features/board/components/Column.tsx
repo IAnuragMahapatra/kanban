@@ -13,15 +13,11 @@ interface ColumnProps {
 }
 
 export function Column({ id, title, tasks, defaultExpanded = true, onClickTask }: ColumnProps) {
-  const [isExpanded, setIsExpanded] = useState(() => {
-    const saved = localStorage.getItem(`amygdylla_col_${id}`);
-    return saved !== null ? saved === 'true' : defaultExpanded;
-  });
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   const toggleExpand = () => {
     const next = !isExpanded;
     setIsExpanded(next);
-    localStorage.setItem(`amygdylla_col_${id}`, String(next));
   };
 
   const { setNodeRef, isOver } = useDroppable({ id });
@@ -31,7 +27,6 @@ export function Column({ id, title, tasks, defaultExpanded = true, onClickTask }
     if (isOver && !isExpanded) {
       timeout = setTimeout(() => {
         setIsExpanded(true);
-        localStorage.setItem(`amygdylla_col_${id}`, 'true');
       }, 600); // 600ms hover delay before expanding
     }
     return () => {

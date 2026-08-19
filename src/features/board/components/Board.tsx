@@ -6,11 +6,11 @@ import { TaskModal } from './TaskModal';
 import { type Task, type Status, type User } from '../../../types';
 
 const COLUMNS: { id: Status; title: string; defaultExpanded: boolean }[] = [
-  { id: 'TRIAGE', title: 'Triage', defaultExpanded: true },
-  { id: 'TODO', title: 'TODO', defaultExpanded: true },
+  { id: 'TRIAGE', title: 'Triage', defaultExpanded: false },
+  { id: 'TODO', title: 'TODO', defaultExpanded: false },
   { id: 'SCHEDULED', title: 'Scheduled', defaultExpanded: false },
   { id: 'READY', title: 'On Table', defaultExpanded: false },
-  { id: 'RUNNING', title: 'In Progress', defaultExpanded: true },
+  { id: 'RUNNING', title: 'In Progress', defaultExpanded: false },
   { id: 'BLOCKED', title: 'Blocked', defaultExpanded: false },
   { id: 'DONE', title: 'Done', defaultExpanded: false },
   { id: 'ARCHIVED', title: 'Archived', defaultExpanded: false },
