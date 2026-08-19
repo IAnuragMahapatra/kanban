@@ -54,7 +54,6 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete }: Ta
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-[10px] uppercase font-bold text-text-muted bg-bg-app px-2 py-0.5 rounded">{task.status}</span>
-              <span className="text-xs text-text-dimmed">by {task.author}</span>
             </div>
             <h2 className="text-xl font-display text-text-primary">{task.title}</h2>
           </div>
@@ -107,19 +106,6 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete }: Ta
 
           {/* Sidebar */}
           <div className="w-full md:w-48 flex flex-col gap-4 shrink-0">
-            <div>
-              <label className="block text-xs uppercase font-bold text-text-muted mb-2">Assignee</label>
-              <select
-                value={task.assignee || ''}
-                onChange={(e) => onUpdate(task.id, { assignee: e.target.value ? e.target.value as User : null })}
-                className="w-full bg-bg-app border border-border-subtle rounded px-2 py-1.5 text-sm text-text-primary focus:outline-none"
-              >
-                <option value="">Unassigned</option>
-                <option value="Anurag">Anurag</option>
-                <option value="Srinibas">Srinibas</option>
-                <option value="Ayush">Ayush</option>
-              </select>
-            </div>
 
             <div>
               <label className="block text-xs uppercase font-bold text-text-muted mb-2">Status</label>

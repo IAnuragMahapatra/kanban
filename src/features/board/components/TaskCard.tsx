@@ -4,11 +4,10 @@ import { type Task } from '../../../types';
 
 interface TaskCardProps {
   task: Task;
-  onClaim?: () => void;
   onClick?: () => void;
 }
 
-export function TaskCard({ task, onClaim, onClick }: TaskCardProps) {
+export function TaskCard({ task, onClick }: TaskCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id });
 
   const style = {
@@ -49,20 +48,7 @@ export function TaskCard({ task, onClaim, onClick }: TaskCardProps) {
       className={`bg-bg-card hover:bg-bg-card-hover border border-border-subtle p-3 mb-2 rounded-sm cursor-grab active:cursor-grabbing flex flex-col gap-2 transition-colors border-t-[3px] ${getBorderColor()} ${isOverdue ? 'shadow-[0_0_8px_rgba(192,57,43,0.3)]' : ''}`}
     >
       <div className="flex justify-between items-start gap-2">
-        <div>
-          <h3 className="text-text-primary font-medium text-sm leading-snug">{task.title}</h3>
-          <span className="text-text-dimmed text-[10px]">by {task.author}</span>
-        </div>
-        {task.assignee ? (
-          <span className="text-text-muted text-xs shrink-0">{task.assignee}</span>
-        ) : onClaim ? (
-          <button 
-            onPointerDown={(e) => { e.stopPropagation(); onClaim(); }}
-            className="text-[10px] uppercase font-bold text-bronze hover:underline shrink-0"
-          >
-            Claim
-          </button>
-        ) : null}
+        <h3 className="text-text-primary font-medium text-sm leading-snug">{task.title}</h3>
       </div>
 
       {task.description && (

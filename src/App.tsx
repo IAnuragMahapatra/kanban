@@ -1,24 +1,20 @@
 import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import { useAuth } from './features/auth/hooks/useAuth';
-import { usePresence } from './features/auth/hooks/usePresence';
-import { useTasks } from './features/board/hooks/useTasks';
 import { AuthGate } from './features/auth/components/AuthGate';
-import { AppShell, type FilterAssignee, type FilterAuthor, type SortOption } from './components/layout/AppShell';
+import { AppShell, type SortOption } from './components/layout/AppShell';
 import { Board } from './features/board/components/Board';
 import { QuickAdd } from './features/board/components/QuickAdd';
 import { type Status } from './types';
 
 function App() {
   const { currentUser, login } = useAuth();
-  const { onlineUsers } = usePresence(currentUser);
   const { tasks, loading, addTask, updateTask, deleteTask } = useTasks();
   
   const [search, setSearch] = useState('');
   const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
 
-  const [filterAssignee, setFilterAssignee] = useState<FilterAssignee>('All');
-  const [filterAuthor, setFilterAuthor] = useState<FilterAuthor>('All');
+
   const [hiddenStatuses, setHiddenStatuses] = useState<Status[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>('Manual');
 
@@ -49,23 +45,11 @@ function App() {
 
   let finalTasks = [...tasks];
 
-  if (filterAssignee !== 'All') {
-    const target = filterAssignee === 'Me' ? currentUser : filterAssignee;
-    if (target === 'Unassigned') {
-      finalTasks = finalTasks.filter(t => !t.assignee);
-    } else {
-      finalTasks = finalTasks.filter(t => t.assignee === target);
-    }
-  }
 
-  if (filterAuthor !== 'All') {
-    const target = filterAuthor === 'Me' ? currentUser : filterAuthor;
-    finalTasks = finalTasks.filter(t => t.author === target);
-  }
 
   if (search.trim()) {
     const fuse = new Fuse(finalTasks, {
-      keys: ['title', 'description', 'blocker_reason', 'author', 'assignee', 'comments.content'],
+      keys: ['title', 'description', 'blocker_reason', 'comments.content'],
       threshold: 0.3,
       ignoreLocation: true
     });
@@ -92,14 +76,8 @@ function App() {
   return (
     <>
       <AppShell 
-        onlineUsers={onlineUsers}
-        currentUser={currentUser}
         onSearch={setSearch}
         onAddTrigger={() => setIsQuickAddOpen(true)}
-        filterAssignee={filterAssignee}
-        setFilterAssignee={setFilterAssignee}
-        filterAuthor={filterAuthor}
-        setFilterAuthor={setFilterAuthor}
         hiddenStatuses={hiddenStatuses}
         setHiddenStatuses={setHiddenStatuses}
         sortBy={sortBy}

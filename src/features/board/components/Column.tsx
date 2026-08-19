@@ -9,11 +9,10 @@ interface ColumnProps {
   title: string;
   tasks: Task[];
   defaultExpanded?: boolean;
-  onClaimTask: (taskId: string) => void;
   onClickTask: (task: Task) => void;
 }
 
-export function Column({ id, title, tasks, defaultExpanded = true, onClaimTask, onClickTask }: ColumnProps) {
+export function Column({ id, title, tasks, defaultExpanded = true, onClickTask }: ColumnProps) {
   const [isExpanded, setIsExpanded] = useState(() => {
     const saved = localStorage.getItem(`amygdylla_col_${id}`);
     return saved !== null ? saved === 'true' : defaultExpanded;
@@ -86,7 +85,7 @@ export function Column({ id, title, tasks, defaultExpanded = true, onClaimTask, 
   }
 
   const renderTask = (task: Task) => (
-    <TaskCard key={task.id} task={task} onClaim={() => onClaimTask(task.id)} onClick={() => onClickTask(task)} />
+    <TaskCard key={task.id} task={task} onClick={() => onClickTask(task)} />
   );
 
   return (

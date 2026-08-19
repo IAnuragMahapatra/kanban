@@ -10,7 +10,6 @@ interface QuickAddProps {
 export function QuickAdd({ isOpen, onClose, onAdd }: QuickAddProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [assignee, setAssignee] = useState<User | ''>('');
   const [status, setStatus] = useState<Status>('TRIAGE');
   const [deadline, setDeadline] = useState('');
   
@@ -20,7 +19,6 @@ export function QuickAdd({ isOpen, onClose, onAdd }: QuickAddProps) {
     if (isOpen) {
       setTitle('');
       setDescription('');
-      setAssignee('');
       setStatus('TRIAGE');
       setDeadline('');
       setTimeout(() => inputRef.current?.focus(), 10);
@@ -34,7 +32,6 @@ export function QuickAdd({ isOpen, onClose, onAdd }: QuickAddProps) {
     if (title.trim()) {
       onAdd(title.trim(), {
         description,
-        assignee: assignee || null,
         status,
         deadline: deadline ? new Date(deadline).toISOString() : null,
       });
@@ -96,19 +93,6 @@ export function QuickAdd({ isOpen, onClose, onAdd }: QuickAddProps) {
 
           {/* Sidebar */}
           <div className="w-full md:w-48 flex flex-col gap-4 shrink-0">
-            <div>
-              <label className="block text-xs uppercase font-bold text-text-muted mb-2">Assignee</label>
-              <select
-                value={assignee}
-                onChange={(e) => setAssignee(e.target.value as User | '')}
-                className="w-full bg-bg-app border border-border-subtle rounded px-2 py-1.5 text-sm text-text-primary focus:outline-none"
-              >
-                <option value="">Unassigned</option>
-                <option value="Anurag">Anurag</option>
-                <option value="Srinibas">Srinibas</option>
-                <option value="Ayush">Ayush</option>
-              </select>
-            </div>
 
             <div>
               <label className="block text-xs uppercase font-bold text-text-muted mb-2">Status</label>

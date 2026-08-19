@@ -1,6 +1,6 @@
 export type Status = 'TRIAGE' | 'TODO' | 'SCHEDULED' | 'READY' | 'RUNNING' | 'BLOCKED' | 'DONE' | 'ARCHIVED';
 
-export type User = 'Anurag' | 'Srinibas' | 'Ayush';
+export type User = 'Anurag';
 
 export interface Task {
   id: string;

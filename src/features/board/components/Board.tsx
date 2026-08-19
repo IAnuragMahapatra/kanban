@@ -125,7 +125,6 @@ export function Board({ tasks, currentUser, onUpdateTask, onDeleteTask, hiddenSt
             <TaskCard 
               key={task.id} 
               task={task} 
-              onClaim={!task.assignee ? () => onUpdateTask(task.id, { assignee: currentUser }) : undefined} 
               onClick={() => setEditingTask(task)}
             />
           ))}
@@ -163,7 +162,6 @@ export function Board({ tasks, currentUser, onUpdateTask, onDeleteTask, hiddenSt
             title={col.title}
             tasks={tasks.filter(t => t.status === col.id)}
             defaultExpanded={col.defaultExpanded}
-            onClaimTask={(id) => onUpdateTask(id, { assignee: currentUser })}
             onClickTask={(task) => setEditingTask(task)}
           />
         ))}

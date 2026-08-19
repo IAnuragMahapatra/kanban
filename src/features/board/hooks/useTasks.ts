@@ -60,8 +60,8 @@ export function useTasks() {
       title,
       description: details?.description || '',
       status: details?.status || 'TRIAGE',
-      author: author as any,
-      assignee: details?.assignee || null,
+      author: 'Anurag',
+      assignee: null,
       blocker_reason: null,
       created_at: new Date().toISOString(),
       deadline: details?.deadline || null,
@@ -75,10 +75,10 @@ export function useTasks() {
       .insert({ 
         id: tempId, 
         title, 
-        author, 
+        author: 'Anurag', 
         status: details?.status || 'TRIAGE',
         description: details?.description || '',
-        assignee: details?.assignee || null,
+        assignee: null,
         deadline: details?.deadline || null
       });
       
