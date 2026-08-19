@@ -172,7 +172,7 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete, onDe
                 className="px-4 py-1.5 border border-bronze text-bronze text-sm font-bold rounded hover:bg-bronze/10 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isDecomposing ? (
-                  <span className="animate-pulse">✨ Decomposing...</span>
+                  <span className="animate-pulse">Decomposing...</span>
                 ) : (
                   <span>Decompose with AI</span>
                 )}
