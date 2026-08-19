@@ -169,7 +169,7 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete, onDe
               <button 
                 onClick={handleDecompose} 
                 disabled={isDecomposing}
-                className="px-4 py-1.5 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/30 text-purple-400 text-sm font-bold rounded hover:from-purple-500/20 hover:to-blue-500/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                className="px-4 py-1.5 border border-bronze text-bronze text-sm font-bold rounded hover:bg-bronze/10 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isDecomposing ? (
                   <span className="animate-pulse">✨ Decomposing...</span>
