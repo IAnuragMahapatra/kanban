@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { type Task, type User, type Status } from '../../../types';
+import { type Task, type Status } from '../../../types';
 
 interface QuickAddProps {
   isOpen: boolean;

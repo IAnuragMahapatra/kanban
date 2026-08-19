@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-const AUTH_KEY = 'amygdylla_kanban_auth';
+import { type User } from '../../../types';
 
-export type User = 'Anurag' | 'Srinibas' | 'Ayush';
+const AUTH_KEY = 'amygdylla_kanban_auth';
 
 export function useAuth() {
   const [currentUser, setCurrentUser] = useState<User | null>(() => {

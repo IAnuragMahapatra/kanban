@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import { useAuth } from './features/auth/hooks/useAuth';
+import { useTasks } from './features/board/hooks/useTasks';
 import { AuthGate } from './features/auth/components/AuthGate';
 import { AppShell, type SortOption } from './components/layout/AppShell';
 import { Board } from './features/board/components/Board';
@@ -95,7 +96,7 @@ function App() {
       <QuickAdd 
         isOpen={isQuickAddOpen} 
         onClose={() => setIsQuickAddOpen(false)} 
-        onAdd={(title, details) => addTask(title, currentUser, details)}
+        onAdd={(title, details) => addTask(title, details)}
       />
     </>
   );

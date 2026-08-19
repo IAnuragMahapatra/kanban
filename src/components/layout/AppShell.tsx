@@ -142,6 +142,7 @@ export function AppShell({
           >
             +
           </button>
+        </div>
 
 
       </header>

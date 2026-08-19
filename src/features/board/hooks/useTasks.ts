@@ -52,7 +52,7 @@ export function useTasks() {
     };
   }, []);
 
-  const addTask = async (title: string, author: string, details?: Partial<Task>) => {
+  const addTask = async (title: string, details?: Partial<Task>) => {
     // Optimistic insert
     const tempId = crypto.randomUUID();
     const newTask: Task = {
