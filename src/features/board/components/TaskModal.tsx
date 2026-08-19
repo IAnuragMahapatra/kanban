@@ -17,11 +17,11 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete, onDe
   const [newComment, setNewComment] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDecomposing, setIsDecomposing] = useState(false);
-  
+
   const { comments, addComment } = useComments(task.id);
 
   const handleSave = () => {
-    onUpdate(task.id, { 
+    onUpdate(task.id, {
       description,
       deadline: deadline ? new Date(deadline).toISOString() : null
     });
@@ -59,12 +59,12 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete, onDe
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-bg-app/80 backdrop-blur-sm"
       onKeyDown={handleKeyDown}
     >
       <div className="bg-bg-column border border-border-subtle rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
-        
+
         {/* Header */}
         <div className="p-4 border-b border-border-subtle flex justify-between items-start gap-4">
           <div className="flex-1">
@@ -78,7 +78,7 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete, onDe
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 flex flex-col md:flex-row gap-6 scrollbar-thin">
-          
+
           {/* Main Column */}
           <div className="flex-1 flex flex-col gap-8">
             <div className="flex flex-col shrink-0">
@@ -152,7 +152,7 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete, onDe
             </div>
 
           <div className="mt-auto pt-6">
-              <button 
+              <button
                 onClick={() => setShowDeleteConfirm(true)}
                 className="w-full py-2 text-status-blocked border border-status-blocked/30 hover:bg-status-blocked/10 rounded text-sm transition-colors"
               >
@@ -166,15 +166,15 @@ export function TaskModal({ task, currentUser, onClose, onUpdate, onDelete, onDe
         <div className="p-4 border-t border-border-subtle bg-bg-column flex justify-between items-center gap-3">
           <div>
             {task.status === 'TRIAGE' && onDecompose && (
-              <button 
-                onClick={handleDecompose} 
+              <button
+                onClick={handleDecompose}
                 disabled={isDecomposing}
                 className="px-4 py-1.5 border border-bronze text-bronze text-sm font-bold rounded hover:bg-bronze/10 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isDecomposing ? (
                   <span className="animate-pulse">✨ Decomposing...</span>
                 ) : (
-                  <span>✨ Decompose with AI</span>
+                  <span>Decompose with AI</span>
                 )}
               </button>
             )}
