@@ -46,7 +46,23 @@ export default async function handler(req: Request) {
     if (jsonStr.endsWith('```')) jsonStr = jsonStr.slice(0, -3);
     jsonStr = jsonStr.trim();
 
-    return new Response(jsonStr, {
+    // Robust parsing: sometimes the model forgets the closing bracket or brace
+    let parsedArray = [];
+    try {
+      parsedArray = JSON.parse(jsonStr);
+    } catch (e) {
+      try {
+        parsedArray = JSON.parse(jsonStr + ']');
+      } catch (e2) {
+        try {
+          parsedArray = JSON.parse(jsonStr + '}\n]');
+        } catch (e3) {
+          throw new Error('AI returned malformed JSON that could not be auto-fixed: ' + jsonStr.substring(0, 50) + '...');
+        }
+      }
+    }
+
+    return new Response(JSON.stringify(parsedArray), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
